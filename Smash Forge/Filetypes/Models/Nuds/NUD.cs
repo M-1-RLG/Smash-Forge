@@ -445,6 +445,9 @@ namespace Smash_Forge
 
         private void DrawAllPolygons(Shader shader, Camera camera, bool drawPolyIds)
         {
+            shader = SFGenericModel.ShaderGenerators.VertexAttributeShaderGenerator.CreateShader(NudRenderMesh.GetAttributeRenderInfo());
+            shader.UseProgram();
+            shader.SetInt("attributeIndex", (int)Runtime.renderType);
             DrawShadedPolygons(shader, camera, drawPolyIds);
             DrawSelectionOutlines(shader, camera);
         }

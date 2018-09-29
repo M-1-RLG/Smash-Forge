@@ -5,6 +5,7 @@ using SFGenericModel.RenderState;
 using SFGenericModel.VertexAttributes;
 using Smash_Forge.Filetypes.Models.Nuds;
 using System.Collections.Generic;
+using SFGenericModel.ShaderGenerators;
 
 namespace Smash_Forge
 {
@@ -107,19 +108,34 @@ namespace Smash_Forge
 
         public override List<VertexAttribute> GetVertexAttributes()
         {
-            return new List<VertexAttribute>()
-            {                                                 
-                new VertexAttributeInfo("vPosition",  ValueCount.Three, VertexAttribPointerType.Float),
-                new VertexAttributeInfo("vNormal",    ValueCount.Three, VertexAttribPointerType.Float),
-                new VertexAttributeInfo("vTangent",   ValueCount.Three, VertexAttribPointerType.Float),
-                new VertexAttributeInfo("vBiTangent", ValueCount.Three, VertexAttribPointerType.Float),
-                new VertexAttributeInfo("vUV",        ValueCount.Two,   VertexAttribPointerType.Float),
-                new VertexAttributeInfo("vColor",     ValueCount.Four,  VertexAttribPointerType.Float),
-                new VertexAttributeIntInfo("vBone",   ValueCount.Four,  VertexAttribIntegerType.Int),
-                new VertexAttributeInfo("vWeight",    ValueCount.Four,  VertexAttribPointerType.Float),
-                new VertexAttributeInfo("vUV2",       ValueCount.Two,   VertexAttribPointerType.Float),
-                new VertexAttributeInfo("vUV3",       ValueCount.Two,   VertexAttribPointerType.Float),
-            };
+            return vertexAttributes;
         }
+
+        public static List<VertexAttributeRenderInfo> GetAttributeRenderInfo()
+        {
+            var attributes = new List<VertexAttributeRenderInfo>();
+            foreach (var attribute in vertexAttributes)
+            {
+                if (attribute.Name.Contains("Normal") || attribute.Name.Contains("Tangent"))
+                    attributes.Add(new VertexAttributeRenderInfo(true, true, attribute));
+                else
+                    attributes.Add(new VertexAttributeRenderInfo(false, false, attribute));
+            }
+            return attributes;
+        }
+
+        private static List<VertexAttribute> vertexAttributes = new List<VertexAttribute>()
+        {
+            new VertexAttributeInfo("vPosition",  ValueCount.Three, VertexAttribPointerType.Float),
+            new VertexAttributeInfo("vNormal",    ValueCount.Three, VertexAttribPointerType.Float),
+            new VertexAttributeInfo("vTangent",   ValueCount.Three, VertexAttribPointerType.Float),
+            new VertexAttributeInfo("vBiTangent", ValueCount.Three, VertexAttribPointerType.Float),
+            new VertexAttributeInfo("vUV",        ValueCount.Two,   VertexAttribPointerType.Float),
+            new VertexAttributeInfo("vColor",     ValueCount.Four,  VertexAttribPointerType.Float),
+            new VertexAttributeIntInfo("vBone",   ValueCount.Four,  VertexAttribIntegerType.Int),
+            new VertexAttributeInfo("vWeight",    ValueCount.Four,  VertexAttribPointerType.Float),
+            new VertexAttributeInfo("vUV2",       ValueCount.Two,   VertexAttribPointerType.Float),
+            new VertexAttributeInfo("vUV3",       ValueCount.Two,   VertexAttribPointerType.Float),
+        };
     }
 }
