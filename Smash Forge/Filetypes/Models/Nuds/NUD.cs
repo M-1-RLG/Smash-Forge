@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using SFGenericModel.ShaderGenerators;
 
 namespace Smash_Forge
 {
@@ -445,9 +446,6 @@ namespace Smash_Forge
 
         private void DrawAllPolygons(Shader shader, Camera camera, bool drawPolyIds)
         {
-            shader = SFGenericModel.ShaderGenerators.VertexAttributeShaderGenerator.CreateShader(NudRenderMesh.GetAttributeRenderInfo());
-            shader.UseProgram();
-            shader.SetInt("attributeIndex", (int)Runtime.renderType);
             DrawShadedPolygons(shader, camera, drawPolyIds);
             DrawSelectionOutlines(shader, camera);
         }
@@ -504,10 +502,27 @@ namespace Smash_Forge
             }
         }
 
+        Shader newShader = null;
         private void DrawPolygonShaded(Polygon p, Shader shader, Camera camera, Dictionary<NudEnums.DummyTexture, Texture> dummyTextures, bool drawId = false)
         {
             if (p.vertexIndices.Count < 3)
                 return;
+
+            var textures = new List<TextureRenderInfo>();
+            textures.Add(new TextureRenderInfo("dif", UvCoord.TexCoord0));
+            textures.Add(new TextureRenderInfo("dif2", UvCoord.TexCoord0));
+            textures.Add(new TextureRenderInfo("dif3", UvCoord.TexCoord0));
+            textures.Add(new TextureRenderInfo("normalMap", UvCoord.TexCoord0));
+
+            var position = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vPosition", SFGenericModel.VertexAttributes.ValueCount.Three, VertexAttribPointerType.Float);
+            var uv0 = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vUV", SFGenericModel.VertexAttributes.ValueCount.Two, VertexAttribPointerType.Float);
+            if (newShader == null)
+                newShader = TextureShaderGenerator.CreateShader(textures, position, uv0);
+
+            shader = newShader;
+            shader.UseProgram();
+
+            shader.SetInt("textureIndex", (int)Runtime.renderType);
 
             Material material = p.materials[0];
 

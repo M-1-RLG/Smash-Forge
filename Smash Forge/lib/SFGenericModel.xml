@@ -339,6 +339,73 @@
             </summary>
             <param name="renderSettings">The settings used to perform the update</param>
         </member>
+        <member name="T:SFGenericModel.ShaderGenerators.UvCoord">
+            <summary>
+            The texture coordinate values used for rendering.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.UvCoord.TexCoord0">
+            <summary>
+            The first UV channel.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.UvCoord.TexCoord1">
+            <summary>
+            The second UV channel.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.UvCoord.TexCoord2">
+            <summary>
+            The third UV channel.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.UvCoord.CamEnvSphere">
+            <summary>
+            View normals remapped to the 0 to 1 range.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.UvCoord.CubeMap">
+            <summary>
+            A three component reflection vector used for cube maps.
+            </summary>
+        </member>
+        <member name="T:SFGenericModel.ShaderGenerators.TextureRenderInfo">
+            <summary>
+            Contains information on how a texture should be rendered.
+            </summary>
+        </member>
+        <member name="P:SFGenericModel.ShaderGenerators.TextureRenderInfo.Name">
+            <summary>
+            The name of the uniform variable.
+            </summary>
+        </member>
+        <member name="P:SFGenericModel.ShaderGenerators.TextureRenderInfo.UvCoord">
+            <summary>
+            Determines what UV coordinates will be used
+            </summary>
+        </member>
+        <member name="M:SFGenericModel.ShaderGenerators.TextureRenderInfo.#ctor(System.String,SFGenericModel.ShaderGenerators.UvCoord)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="uvCoord"></param>
+        </member>
+        <member name="T:SFGenericModel.ShaderGenerators.TextureShaderGenerator">
+            <summary>
+            Contains methods for generating a texture debug shader.
+            </summary>
+        </member>
+        <member name="M:SFGenericModel.ShaderGenerators.TextureShaderGenerator.CreateShader(System.Collections.Generic.List{SFGenericModel.ShaderGenerators.TextureRenderInfo},SFGenericModel.VertexAttributes.VertexAttribute,SFGenericModel.VertexAttributes.VertexAttribute)">
+            <summary>
+            Generates a shader for rendering each of 
+            the vertex attributes individually.      
+            </summary>
+            <param name="textures">Textures used to generate render modes</param>
+            <param name="position"></param>
+            <param name="uv0"></param>
+            <returns>A new shader that can be used for rendering</returns>
+        </member>
         <member name="T:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo">
             <summary>
             Stores information on how a vertex attribute will be displayed.
