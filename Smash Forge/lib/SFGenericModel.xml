@@ -369,6 +369,36 @@
             A three component reflection vector used for cube maps.
             </summary>
         </member>
+        <member name="T:SFGenericModel.ShaderGenerators.TextureSwizzle">
+            <summary>
+            The channels of the texture assigned to the output color.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.TextureSwizzle.Rgb">
+            <summary>
+            Use the red, green, and blue channels. Alpha is set to 1.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.TextureSwizzle.R">
+            <summary>
+            Use the red channel for the output RGB channels. Alpha is set to 1.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.TextureSwizzle.G">
+            <summary>
+            Use the green channel for the output RGB channels. Alpha is set to 1.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.TextureSwizzle.B">
+            <summary>
+            Use the blue channel for the output RGB channels. Alpha is set to 1.
+            </summary>
+        </member>
+        <member name="F:SFGenericModel.ShaderGenerators.TextureSwizzle.A">
+            <summary>
+            Use the alpha channel for the output RGB channels. Alpha is set to 1.
+            </summary>
+        </member>
         <member name="T:SFGenericModel.ShaderGenerators.TextureRenderInfo">
             <summary>
             Contains information on how a texture should be rendered.
@@ -376,7 +406,7 @@
         </member>
         <member name="P:SFGenericModel.ShaderGenerators.TextureRenderInfo.Name">
             <summary>
-            The name of the uniform variable.
+            The name of the texture uniform variable.
             </summary>
         </member>
         <member name="P:SFGenericModel.ShaderGenerators.TextureRenderInfo.UvCoord">
@@ -384,25 +414,32 @@
             Determines what UV coordinates will be used
             </summary>
         </member>
-        <member name="M:SFGenericModel.ShaderGenerators.TextureRenderInfo.#ctor(System.String,SFGenericModel.ShaderGenerators.UvCoord)">
+        <member name="P:SFGenericModel.ShaderGenerators.TextureRenderInfo.TextureSwizzle">
+            <summary>
+            The channels of the texture that will be assigned to the output
+            </summary>
+        </member>
+        <member name="M:SFGenericModel.ShaderGenerators.TextureRenderInfo.#ctor(System.String,SFGenericModel.ShaderGenerators.UvCoord,SFGenericModel.ShaderGenerators.TextureSwizzle)">
             <summary>
             
             </summary>
             <param name="name"></param>
             <param name="uvCoord"></param>
+            <param name="textureSwizzle"></param>
         </member>
         <member name="T:SFGenericModel.ShaderGenerators.TextureShaderGenerator">
             <summary>
             Contains methods for generating a texture debug shader.
             </summary>
         </member>
-        <member name="M:SFGenericModel.ShaderGenerators.TextureShaderGenerator.CreateShader(System.Collections.Generic.List{SFGenericModel.ShaderGenerators.TextureRenderInfo},SFGenericModel.VertexAttributes.VertexAttribute,SFGenericModel.VertexAttributes.VertexAttribute)">
+        <member name="M:SFGenericModel.ShaderGenerators.TextureShaderGenerator.CreateShader(System.Collections.Generic.List{SFGenericModel.ShaderGenerators.TextureRenderInfo},SFGenericModel.VertexAttributes.VertexAttribute,SFGenericModel.VertexAttributes.VertexAttribute,SFGenericModel.VertexAttributes.VertexAttribute)">
             <summary>
             Generates a shader for rendering each of 
             the vertex attributes individually.      
             </summary>
             <param name="textures">Textures used to generate render modes</param>
             <param name="position"></param>
+            <param name="normal">The normals used for sphere map rendering</param>
             <param name="uv0"></param>
             <returns>A new shader that can be used for rendering</returns>
         </member>
@@ -411,17 +448,22 @@
             Stores information on how a vertex attribute will be displayed.
             </summary>
         </member>
-        <member name="F:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.normalize">
+        <member name="P:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.Name">
+            <summary>
+            The name value of <see cref="P:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.AttributeInfo"/>
+            </summary>
+        </member>
+        <member name="P:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.Normalize">
             <summary>
             Normalize the vector before rendering.
             </summary>
         </member>
-        <member name="F:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.remapToVisibleRange">
+        <member name="P:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.RemapToVisibleRange">
             <summary>
             Remap values in range [-1, 1] to range [0, 1]
             </summary>
         </member>
-        <member name="F:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.attributeInfo">
+        <member name="P:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.AttributeInfo">
             <summary>
             Information about the attribute name and type
             </summary>

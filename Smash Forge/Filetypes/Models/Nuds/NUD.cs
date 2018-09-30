@@ -509,20 +509,29 @@ namespace Smash_Forge
                 return;
 
             var textures = new List<TextureRenderInfo>();
-            textures.Add(new TextureRenderInfo("dif", UvCoord.TexCoord0));
-            textures.Add(new TextureRenderInfo("dif2", UvCoord.TexCoord0));
-            textures.Add(new TextureRenderInfo("dif3", UvCoord.TexCoord0));
-            textures.Add(new TextureRenderInfo("normalMap", UvCoord.TexCoord0));
+            textures.Add(new TextureRenderInfo("dif",       UvCoord.TexCoord0,    TextureSwizzle.Rgb));
+            textures.Add(new TextureRenderInfo("spheremap", UvCoord.CamEnvSphere, TextureSwizzle.Rgb));
+            textures.Add(new TextureRenderInfo("normalMap", UvCoord.TexCoord0,    TextureSwizzle.Rgb));
+            textures.Add(new TextureRenderInfo("normalMap", UvCoord.TexCoord0,    TextureSwizzle.A));
+            textures.Add(new TextureRenderInfo("ramp",      UvCoord.TexCoord0,    TextureSwizzle.Rgb));
+            textures.Add(new TextureRenderInfo("dummyRamp", UvCoord.TexCoord0,    TextureSwizzle.Rgb));
 
             var position = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vPosition", SFGenericModel.VertexAttributes.ValueCount.Three, VertexAttribPointerType.Float);
             var uv0 = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vUV", SFGenericModel.VertexAttributes.ValueCount.Two, VertexAttribPointerType.Float);
+            var nrm = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vNormal", SFGenericModel.VertexAttributes.ValueCount.Three, VertexAttribPointerType.Float);
+
             if (newShader == null)
-                newShader = TextureShaderGenerator.CreateShader(textures, position, uv0);
+                newShader = TextureShaderGenerator.CreateShader(textures, position, nrm, uv0);
 
             shader = newShader;
             shader.UseProgram();
 
             shader.SetInt("textureIndex", (int)Runtime.renderType);
+
+            Matrix4 sphereMatrix = camera.ModelViewMatrix;
+            sphereMatrix.Invert();
+            sphereMatrix.Transpose();
+            shader.SetMatrix4x4("sphereMatrix", ref sphereMatrix);
 
             Material material = p.materials[0];
 
