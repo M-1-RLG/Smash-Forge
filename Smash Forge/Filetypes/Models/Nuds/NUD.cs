@@ -508,30 +508,29 @@ namespace Smash_Forge
             if (p.vertexIndices.Count < 3)
                 return;
 
-            var textures = new List<TextureRenderInfo>();
-            textures.Add(new TextureRenderInfo("dif",       UvCoord.TexCoord0,    TextureSwizzle.Rgb));
-            textures.Add(new TextureRenderInfo("spheremap", UvCoord.CamEnvSphere, TextureSwizzle.Rgb));
-            textures.Add(new TextureRenderInfo("normalMap", UvCoord.TexCoord0,    TextureSwizzle.Rgb));
-            textures.Add(new TextureRenderInfo("normalMap", UvCoord.TexCoord0,    TextureSwizzle.A));
-            textures.Add(new TextureRenderInfo("ramp",      UvCoord.TexCoord0,    TextureSwizzle.Rgb));
-            textures.Add(new TextureRenderInfo("dummyRamp", UvCoord.TexCoord0,    TextureSwizzle.Rgb));
-            textures.Add(new TextureRenderInfo("stagecube", UvCoord.CubeMap,      TextureSwizzle.Rgb));
-
-            var position = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vPosition", SFGenericModel.VertexAttributes.ValueCount.Three, VertexAttribPointerType.Float);
-            var uv0 = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vUV", SFGenericModel.VertexAttributes.ValueCount.Two, VertexAttribPointerType.Float);
-            var nrm = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vNormal", SFGenericModel.VertexAttributes.ValueCount.Three, VertexAttribPointerType.Float);
-
             if (newShader == null)
             {
+                var textures = new List<TextureRenderInfo>();
+                textures.Add(new TextureRenderInfo("dif", UvCoord.TexCoord0, TextureSwizzle.Rgb));
+                textures.Add(new TextureRenderInfo("spheremap", UvCoord.CamEnvSphere, TextureSwizzle.Rgb));
+                textures.Add(new TextureRenderInfo("normalMap", UvCoord.TexCoord0, TextureSwizzle.Rgb));
+                textures.Add(new TextureRenderInfo("normalMap", UvCoord.TexCoord0, TextureSwizzle.A));
+                textures.Add(new TextureRenderInfo("ramp", UvCoord.TexCoord0, TextureSwizzle.Rgb));
+                textures.Add(new TextureRenderInfo("dummyRamp", UvCoord.TexCoord0, TextureSwizzle.Rgb));
+                textures.Add(new TextureRenderInfo("stagecube", UvCoord.CubeMap, TextureSwizzle.Rgb));
+
+                var position = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vPosition", SFGenericModel.VertexAttributes.ValueCount.Three, VertexAttribPointerType.Float);
+                var uv0 = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vUV", SFGenericModel.VertexAttributes.ValueCount.Two, VertexAttribPointerType.Float);
+                var nrm = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vNormal", SFGenericModel.VertexAttributes.ValueCount.Three, VertexAttribPointerType.Float);
+
                 string vertexSource;
                 string fragmentSource;
                 TextureShaderGenerator.CreateShader(textures, position, nrm, uv0, out vertexSource, out fragmentSource);
                 newShader = new Shader();
-                shader.LoadShaders(vertexSource, fragmentSource);
+                newShader.LoadShaders(vertexSource, fragmentSource);
 
                 System.Diagnostics.Debug.WriteLine(vertexSource);
                 System.Diagnostics.Debug.WriteLine(fragmentSource);
-                shader.OnTextureUnitTypeMismatch += Shader_OnTextureUnitTypeMismatch;
             }
 
             shader = newShader;
@@ -559,11 +558,6 @@ namespace Smash_Forge
             p.renderMesh.SetMaterialValues(material);
 
             p.renderMesh.Draw(shader, camera);
-        }
-
-        private void Shader_OnTextureUnitTypeMismatch(Shader sender, SFGraphics.GLObjects.Shaders.ShaderEventArgs.UniformSetEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine($"{e.Name} {e.Type}");
         }
 
         private void SetShaderUniforms(Polygon p, Shader shader, Camera camera, Material material, Dictionary<NudEnums.DummyTexture, Texture> dummyTextures, int id = 0, bool drawId = false)
