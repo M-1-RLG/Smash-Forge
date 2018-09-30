@@ -522,7 +522,17 @@ namespace Smash_Forge
             var nrm = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vNormal", SFGenericModel.VertexAttributes.ValueCount.Three, VertexAttribPointerType.Float);
 
             if (newShader == null)
-                newShader = TextureShaderGenerator.CreateShader(textures, position, nrm, uv0);
+            {
+                string vertexSource;
+                string fragmentSource;
+                TextureShaderGenerator.CreateShader(textures, position, nrm, uv0, out vertexSource, out fragmentSource);
+                newShader = new Shader();
+                shader.LoadShaders(vertexSource, fragmentSource);
+
+                System.Diagnostics.Debug.WriteLine(vertexSource);
+                System.Diagnostics.Debug.WriteLine(fragmentSource);
+                shader.OnTextureUnitTypeMismatch += Shader_OnTextureUnitTypeMismatch;
+            }
 
             shader = newShader;
             shader.UseProgram();
@@ -549,6 +559,11 @@ namespace Smash_Forge
             p.renderMesh.SetMaterialValues(material);
 
             p.renderMesh.Draw(shader, camera);
+        }
+
+        private void Shader_OnTextureUnitTypeMismatch(Shader sender, SFGraphics.GLObjects.Shaders.ShaderEventArgs.UniformSetEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine($"{e.Name} {e.Type}");
         }
 
         private void SetShaderUniforms(Polygon p, Shader shader, Camera camera, Material material, Dictionary<NudEnums.DummyTexture, Texture> dummyTextures, int id = 0, bool drawId = false)

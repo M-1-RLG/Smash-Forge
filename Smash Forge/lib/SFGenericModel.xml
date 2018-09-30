@@ -419,18 +419,20 @@
         </member>
         <member name="T:SFGenericModel.ShaderGenerators.TextureShaderGenerator">
             <summary>
-            Contains methods for generating a texture debug shader.
+            Contains methods for generating a texture debug shader. 
+            The swizzling and texture coordinate display is controlled per texture.
             </summary>
         </member>
-        <member name="M:SFGenericModel.ShaderGenerators.TextureShaderGenerator.CreateShader(System.Collections.Generic.List{SFGenericModel.ShaderGenerators.TextureRenderInfo},SFGenericModel.VertexAttributes.VertexAttribute,SFGenericModel.VertexAttributes.VertexAttribute,SFGenericModel.VertexAttributes.VertexAttribute)">
+        <member name="M:SFGenericModel.ShaderGenerators.TextureShaderGenerator.CreateShader(System.Collections.Generic.List{SFGenericModel.ShaderGenerators.TextureRenderInfo},SFGenericModel.VertexAttributes.VertexAttribute,SFGenericModel.VertexAttributes.VertexAttribute,SFGenericModel.VertexAttributes.VertexAttribute,System.String@,System.String@)">
             <summary>
-            Generates a shader for rendering each of 
-            the vertex attributes individually.      
+            Generates a shader for rendering each of the specified textures individually.
             </summary>
             <param name="textures">Textures used to generate render modes</param>
-            <param name="position"></param>
+            <param name="position">The vertex position attribute</param>
             <param name="normal">The normals used for sphere map rendering</param>
-            <param name="uv0"></param>
+            <param name="uv0">The texture coordinate attribute</param>
+            <param name="vertexSource">The generated GLSL vertex shader source</param>
+            <param name="fragmentSource">The generated GLSL fragment shader source</param>
             <returns>A new shader that can be used for rendering</returns>
         </member>
         <member name="T:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo">
@@ -472,13 +474,15 @@
             viewing vertex attributes. 
             </summary>
         </member>
-        <member name="M:SFGenericModel.ShaderGenerators.VertexAttributeShaderGenerator.CreateShader(System.Collections.Generic.List{SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo})">
+        <member name="M:SFGenericModel.ShaderGenerators.VertexAttributeShaderGenerator.CreateShader(System.Collections.Generic.List{SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo},System.String@,System.String@)">
             <summary>
             Generates a shader for rendering each of 
             the vertex attributes individually.      
             </summary>
             <param name="attributes">Attributes used to generate render modes. 
             The first attribute is also used as the position.</param>
+            <param name="vertexSource">The generated GLSL vertex shader source</param>
+            <param name="fragmentSource">The generated GLSL fragment shader source</param>
             <returns>A new shader that can be used for rendering</returns>
         </member>
         <member name="T:SFGenericModel.VertexAttributes.AttribPointerUtils">

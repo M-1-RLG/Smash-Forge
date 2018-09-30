@@ -870,6 +870,13 @@
             </summary>
             <param name="shaders">(shader source, shader type, shader name)</param>
         </member>
+        <member name="M:SFGraphics.GLObjects.Shaders.Shader.LoadShaders(System.String,System.String)">
+            <summary>
+            Compiles and attaches shaders from <paramref name="fragmentSource"/> and <paramref name="vertexSource"/>.
+            </summary>
+            <param name="vertexSource">The vertex shader source</param>
+            <param name="fragmentSource">The fragment shader source</param>
+        </member>
         <member name="M:SFGraphics.GLObjects.Shaders.Shader.CreateGlShader(System.String,OpenTK.Graphics.OpenGL.ShaderType)">
             <summary>
             Creates and compiles a new shader from <paramref name="shaderSource"/>.
