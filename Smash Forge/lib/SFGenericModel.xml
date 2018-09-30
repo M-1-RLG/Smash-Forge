@@ -349,16 +349,6 @@
             The first UV channel.
             </summary>
         </member>
-        <member name="F:SFGenericModel.ShaderGenerators.UvCoord.TexCoord1">
-            <summary>
-            The second UV channel.
-            </summary>
-        </member>
-        <member name="F:SFGenericModel.ShaderGenerators.UvCoord.TexCoord2">
-            <summary>
-            The third UV channel.
-            </summary>
-        </member>
         <member name="F:SFGenericModel.ShaderGenerators.UvCoord.CamEnvSphere">
             <summary>
             View normals remapped to the 0 to 1 range.
@@ -423,9 +413,9 @@
             <summary>
             
             </summary>
-            <param name="name"></param>
-            <param name="uvCoord"></param>
-            <param name="textureSwizzle"></param>
+            <param name="name">The value for <see cref="P:SFGenericModel.ShaderGenerators.TextureRenderInfo.Name"/></param>
+            <param name="uvCoord">The value for <see cref="P:SFGenericModel.ShaderGenerators.TextureRenderInfo.UvCoord"/></param>
+            <param name="textureSwizzle">The value for <see cref="P:SFGenericModel.ShaderGenerators.TextureRenderInfo.TextureSwizzle"/></param>
         </member>
         <member name="T:SFGenericModel.ShaderGenerators.TextureShaderGenerator">
             <summary>
@@ -468,13 +458,13 @@
             Information about the attribute name and type
             </summary>
         </member>
-        <member name="M:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.#ctor(System.Boolean,System.Boolean,SFGenericModel.VertexAttributes.VertexAttribute)">
+        <member name="M:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.#ctor(SFGenericModel.VertexAttributes.VertexAttribute,System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
-            <param name="normalize"></param>
-            <param name="remapToVisibleRange"></param>
-            <param name="attributeInfo"></param>
+            <param name="attributeInfo">The value of <see cref="P:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.AttributeInfo"/></param>
+            <param name="normalize">The value of <see cref="P:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.Normalize"/></param>
+            <param name="remapToVisibleRange">The value of <see cref="P:SFGenericModel.ShaderGenerators.VertexAttributeRenderInfo.RemapToVisibleRange"/></param>
         </member>
         <member name="T:SFGenericModel.ShaderGenerators.VertexAttributeShaderGenerator">
             <summary>

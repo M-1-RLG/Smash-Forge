@@ -117,9 +117,9 @@ namespace Smash_Forge
             foreach (var attribute in vertexAttributes)
             {
                 if (attribute.Name.Contains("Normal") || attribute.Name.Contains("Tangent"))
-                    attributes.Add(new VertexAttributeRenderInfo(true, true, attribute));
+                    attributes.Add(new VertexAttributeRenderInfo(attribute, true, true));
                 else
-                    attributes.Add(new VertexAttributeRenderInfo(false, false, attribute));
+                    attributes.Add(new VertexAttributeRenderInfo(attribute));
             }
             return attributes;
         }

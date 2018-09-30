@@ -515,6 +515,7 @@ namespace Smash_Forge
             textures.Add(new TextureRenderInfo("normalMap", UvCoord.TexCoord0,    TextureSwizzle.A));
             textures.Add(new TextureRenderInfo("ramp",      UvCoord.TexCoord0,    TextureSwizzle.Rgb));
             textures.Add(new TextureRenderInfo("dummyRamp", UvCoord.TexCoord0,    TextureSwizzle.Rgb));
+            textures.Add(new TextureRenderInfo("stagecube", UvCoord.CubeMap,      TextureSwizzle.Rgb));
 
             var position = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vPosition", SFGenericModel.VertexAttributes.ValueCount.Three, VertexAttribPointerType.Float);
             var uv0 = new SFGenericModel.VertexAttributes.VertexAttributeInfo("vUV", SFGenericModel.VertexAttributes.ValueCount.Two, VertexAttribPointerType.Float);
@@ -532,6 +533,9 @@ namespace Smash_Forge
             sphereMatrix.Invert();
             sphereMatrix.Transpose();
             shader.SetMatrix4x4("sphereMatrix", ref sphereMatrix);
+
+            Matrix4 mvpMatrix = camera.MvpMatrix;
+            shader.SetMatrix4x4("mvpMatrix", ref mvpMatrix);
 
             Material material = p.materials[0];
 
